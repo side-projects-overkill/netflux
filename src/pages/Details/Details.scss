@@ -165,3 +165,80 @@ $font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: bold;
   }
 }
+
+/* src/components/Details/Details.scss */
+
+// ... (all your existing SCSS styles up to the gallery)
+
+// --- REPLACE the old .gallery-section styles with these .carousel-section styles ---
+.carousel-section {
+  padding: 0 5% 40px 5%;
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #a3a3a3; // Using a variable would be $secondary-text-color
+    padding-bottom: 10px;
+  }
+
+  .carousel {
+    position: relative;
+    width: 100%;
+    margin: auto;
+  }
+
+  // This container clips the content that overflows
+  .carousel-inner-container {
+    overflow: hidden;
+    width: 100%;
+    border-radius: 8px; // Adds nice rounded corners to the viewport
+  }
+
+  // This is the strip of images that moves
+  .carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease-in-out; // The animation!
+  }
+
+  .carousel-item {
+    min-width: 100%; // Each item takes the full width of the container
+    flex-shrink: 0; // Prevents items from shrinking
+    
+    img {
+      width: 100%;
+      height: auto;
+      display: block; // Removes extra space below the image
+    }
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 10;
+    padding: 0 15px;
+    height: 100%; // Makes the click area larger
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    &.prev {
+      left: 0;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+
+    &.next {
+      right: 0;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+  }
+}

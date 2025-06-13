@@ -17,7 +17,29 @@ function Details() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { title } = useParams();
-  console.log(title);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // ... (useEffect for fetching data should be here) ...
+
+  // NEW: Carousel navigation functions
+  const goToPrevious = () => {
+    // Check if images exist before trying to access length
+    if (!movieData || !movieData.Images) return;
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? movieData.Images.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const goToNext = () => {
+    // Check if images exist
+    if (!movieData || !movieData.Images) return;
+    const isLastSlide = currentIndex === movieData.Images.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
+
+
 
   const API_URL = `https://www.apirequest.in/movie/api/title/${title}`; // Using a mocky URL with your exact data
 
@@ -64,7 +86,7 @@ function Details() {
           <div 
             className="details-hero" 
             // CHANGE: Property name is Poster (capital P)
-            style={{ backgroundImage: `url(${movieData.Poster})` }}
+            style={{ backgroundImage: `url(${movieData.Images[0]})` }}
           >
             <div className="hero-overlay"></div>
             <div className="hero-content">
@@ -77,8 +99,8 @@ function Details() {
               </div>
               <p className="movie-plot">{movieData.plot}</p>
               <div className="hero-buttons">
-                <button className="btn-play">▶ Play</button>
-                <button className="btn-info">ⓘ More Info</button>
+                <button className="btn-play">＄ Buy</button>
+                <button className="btn-info">🛒 Add to Cart</button>
               </div>
             </div>
           </div>
@@ -102,16 +124,28 @@ function Details() {
           </div>
           
           {/* NEW: Image Gallery Section */}
-          <div className="gallery-section">
-            <h2>Gallery</h2>
-            <div className="image-gallery">
-              {movieData.Images && movieData.Images.map((image, index) => (
-                <div key={index} className="gallery-item">
-                  <img src={image} alt={`Scene ${index + 1} from ${movieData.title}`} />
+              {movieData.Images && movieData.Images.length > 0 && (
+            <div className="carousel-section">
+              <h2>Gallery</h2>
+              <div className="carousel">
+                <button onClick={goToPrevious} className="carousel-btn prev">‹</button>
+                <div className="carousel-inner-container">
+                    <div 
+                      className="carousel-inner"
+                      // This inline style moves the entire strip of images left or right
+                      style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                    >
+                      {movieData.Images.map((image, index) => (
+                        <div key={index} className="carousel-item">
+                          <img src={image} alt={`Scene ${index + 1} from ${movieData.title}`} />
+                        </div>
+                      ))}
+                    </div>
                 </div>
-              ))}
+                <button onClick={goToNext} className="carousel-btn next">›</button>
+              </div>
             </div>
-          </div>
+          )}
         </>
       )}
     </div>
