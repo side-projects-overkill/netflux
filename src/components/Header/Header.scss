@@ -1,0 +1,26 @@
+/* Header */
+.netflix-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #141414;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.netflix-header .logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #e50914;
+}
+
+.netflix-header nav a {
+  color: white;
+  margin-left: 1.2rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.netflix-header nav a:hover {
+  color: #e50914;
+}

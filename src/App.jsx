@@ -6,7 +6,7 @@ import Checkout from './pages/Checkout/Checkout';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/netflux" element={<Home />} />
       <Route path="/details" element={<Checkout />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
