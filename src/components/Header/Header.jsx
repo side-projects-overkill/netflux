@@ -4,7 +4,7 @@ import './Header.scss';
 function Header() {
   return (
     <header className="netflix-header">
-      <div className="logo">🎬 Netflix Clone</div>
+      <div className="logo">Netflux</div>
       <nav>
         <a href="/">Home</a>
         <a href="/netflux/cart">Cart</a>

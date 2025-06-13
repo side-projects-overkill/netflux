@@ -30,7 +30,6 @@ function Home() {
   return (
     <>
       <main className="main-content">
-        <h2>Featured Movies</h2>
         {loading ? (
           <p>Loading...</p>
         ) : (
