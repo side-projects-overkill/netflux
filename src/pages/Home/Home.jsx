@@ -15,7 +15,6 @@ function Home() {
           throw new Error(`Error: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Fetched movies:', data);
         setMovies(data);
       } catch (error) {
         console.error('Failed to fetch movies:', error);
