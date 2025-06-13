@@ -44,7 +44,7 @@ jobs:
           cat .env
 
       - name: Install dependencies
-        run: npm i
+        run: npm ci
       
       - name: Build React app
         run: npm run build
