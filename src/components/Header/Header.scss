@@ -1,4 +1,5 @@
 /* Header */
+
 .netflix-header {
   display: flex;
   justify-content: space-between;
@@ -24,4 +25,8 @@
 
 .netflix-header nav a:hover {
   color: #e50914;
+}
+
+.logo:hover {
+  courser: pointer;
 }

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './MovieCard.scss';
 
 function MovieCard({ title, poster }) {
@@ -12,8 +13,11 @@ function MovieCard({ title, poster }) {
     navigate('/checkout', { state: { title, poster } });
   };
 
+  const navigateToCard = () => {
+    navigate(`/details/${title}`, { state: { title, poster } });
+  }
   return (
-    <div className="movie-card">
+    <div className="movie-card" onClick={navigateToCard}>
       <div className="movie-card__glow" />
       
       <div className="movie-card__poster-container">
