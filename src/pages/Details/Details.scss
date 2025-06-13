@@ -1,0 +1,167 @@
+/* src/components/Details/Details.scss */
+
+// --- Color and Font Variables ---
+$netflix-red: #e50914;
+$primary-text-color: #ffffff;
+$secondary-text-color: #a3a3a3;
+$background-color: #141414;
+$font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+// --- Centering Mixin for Loading/Error states ---
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.loading-state, .error-state {
+  @include flex-center;
+  background-color: $background-color;
+  color: $primary-text-color;
+}
+
+// --- Main Page Styles ---
+.details-page {
+  background-color: $background-color;
+  color: $primary-text-color;
+  font-family: $font-family;
+  min-height: 100vh;
+
+  // --- Hero Section (Top part with background image) ---
+  .details-hero {
+    position: relative;
+    height: 90vh;
+    background-size: cover;
+    background-position: top center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 5%;
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      // Gradient to make text readable over the image
+      background: linear-gradient(to top, $background-color 10%, rgba(20, 20, 20, 0.5) 50%, rgba(20, 20, 20, 0.2) 100%);
+    }
+
+    .hero-content {
+      position: relative; // To stay on top of the overlay
+      z-index: 2;
+      max-width: 50%;
+
+      .movie-title {
+        font-size: 4rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .movie-meta {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+        color: $secondary-text-color;
+        font-weight: 500;
+
+        .rated {
+          border: 1px solid $secondary-text-color;
+          padding: 2px 8px;
+          border-radius: 4px;
+        }
+      }
+
+      .movie-plot {
+        font-size: 1.2rem;
+        line-height: 1.5;
+        max-width: 600px;
+        margin-bottom: 30px;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 15px;
+
+        button {
+          padding: 12px 28px;
+          border: none;
+          border-radius: 4px;
+          font-size: 1.1rem;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+        }
+
+        .btn-play {
+          background-color: $primary-text-color;
+          color: #000;
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+          }
+        }
+
+        .btn-info {
+          background-color: rgba(109, 109, 110, 0.7);
+          color: $primary-text-color;
+          &:hover {
+            background-color: rgba(109, 109, 110, 0.5);
+          }
+        }
+      }
+    }
+  }
+
+  // --- Body Section (Below the hero) ---
+  .details-body {
+    padding: 40px 5%;
+    display: flex;
+    gap: 40px;
+
+    .info-section {
+      flex: 2;
+      p {
+        margin-bottom: 12px;
+        line-height: 1.4;
+        font-size: 1rem;
+        strong {
+          color: $secondary-text-color;
+        }
+      }
+    }
+
+    .ratings-section {
+      flex: 1;
+      background-color: #2f2f2f;
+      padding: 20px;
+      border-radius: 8px;
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        border-bottom: 1px solid $secondary-text-color;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+// --- Individual Rating Component Style ---
+.rating {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  
+  .rating-source {
+    color: $secondary-text-color;
+  }
+  
+  .rating-value {
+    font-weight: bold;
+  }
+}
