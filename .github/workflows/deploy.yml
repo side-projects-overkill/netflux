@@ -45,6 +45,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Install rollup
+        run: npm install --save-dev rollup
       
       - name: Build React app
         run: npm run build
