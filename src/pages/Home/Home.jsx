@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import './Home.scss'; // Assuming you have some styles for Home
 
@@ -31,7 +29,6 @@ function Home() {
 
   return (
     <>
-      <Header />
       <main className="main-content">
         <h2>Featured Movies</h2>
         {loading ? (
@@ -48,7 +45,6 @@ function Home() {
           </div>
         )}
       </main>
-      <Footer />
     </>
   );
 }
