@@ -42,19 +42,9 @@ jobs:
           echo "VITE_APP_BASE_URL=/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2-)/" >> .env
           echo "VITE_GITHUB_REPOSITORY=$GITHUB_REPOSITORY" >> .env
           cat .env
-      
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            node_modules
-            dist
-          key: ${{ runner.os }}-vue3-build-${{ hashFiles('dist') }}
-          restore-keys: |
-            ${{ runner.os }}-vue3-build-
-      
+
       - name: Install dependencies
-        run: npm i
+        run: npm ci
       
       - name: Build React app
         run: npm run build
