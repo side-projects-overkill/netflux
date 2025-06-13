@@ -8,7 +8,7 @@ import './App.scss';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/netflux" element={<Home />} />
       <Route sensitive={false} path="/details/:title" element={<Details />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
