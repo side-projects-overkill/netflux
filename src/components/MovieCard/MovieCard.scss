@@ -1,24 +1,27 @@
+@use '../../styles/variables' as *;
+
 .movie-card {
   position: relative;
-  width: 380px;
-  height: 450px;
-  background: #1f1f2e;
-  border-radius: 16px;
+  width: 360px;
+  background: $surface-primary;
+  border-radius: $radius-lg;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   }
 
   &__poster-container {
-    height: 300px;
+    height: 360px;
     overflow: hidden;
-    border-radius: 16px 16px 0 0;
+    position: relative;
   }
 
   &__poster {
@@ -26,57 +29,203 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover &__poster {
+    transform: scale(1.1);
+  }
+
+  &__price {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius-md;
+    font-weight: $font-weight-medium;
+    font-size: 0.9rem;
+    z-index: 2;
+    backdrop-filter: blur(10px);
   }
 
   &__content {
     flex: 1;
-    padding: 20px;
+    padding: $spacing-lg;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    min-height: 140px;
+    position: relative;
+  }
+
+  &__title-section {
+    text-align: center;
+    margin-bottom: $spacing-md;
   }
 
   &__title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 16px;
-    text-align: center;
+    font-size: 1.125rem;
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+    margin-bottom: $spacing-sm;
+    line-height: 1.4;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__title-underline {
+    width: 30px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 0 auto;
+    transition: width 0.3s ease;
+  }
+
+  &:hover &__title-underline {
+    width: 50px;
   }
 
   &__actions {
     display: flex;
-    gap: 12px;
+    gap: $spacing-md;
     justify-content: space-between;
   }
 
   &__btn {
     flex: 1;
-    padding: 12px 0;
+    padding: $spacing-md 0;
     border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
+    border-radius: $radius-md;
+    font-size: 0.9rem;
+    font-weight: $font-weight-medium;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.2s ease;
+    font-family: $font-family-primary;
+    position: relative;
+    overflow: hidden;
 
     &--primary {
-      background: #e50914;
-      color: #fff;
+      background: linear-gradient(135deg, #ff6b6b 0%, #d63031 100%);
+      color: white;
+      border: 1px solid rgba(214, 48, 49, 0.3);
+      box-shadow: 0 2px 8px rgba(214, 48, 49, 0.2);
 
-      &:hover {
-        background: #f6121d;
+      &:hover:not(:disabled) {
+        background: linear-gradient(135deg, #ff5252 0%, #c0392b 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(214, 48, 49, 0.3);
+        border-color: rgba(214, 48, 49, 0.5);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      // Adding state (loading animation)
+      &--adding {
+        background: linear-gradient(135deg, #ff8a80 0%, #e57373 100%);
+        cursor: not-allowed;
+        animation: pulse-gradient 1.5s ease-in-out infinite;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 16px;
+          height: 16px;
+          margin: -8px 0 0 -8px;
+          border: 2px solid transparent;
+          border-top: 2px solid rgba(255, 255, 255, 0.8);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+      }
+
+      // Added state (success)
+      &--added {
+        background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        cursor: default;
+        border-color: rgba(39, 174, 96, 0.4);
+        box-shadow: 0 2px 8px rgba(39, 174, 96, 0.2);
+
+        &:hover {
+          background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+          transform: none;
+        }
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
       }
     }
 
     &--secondary {
-      background: #ffffff1a;
-      color: #fff;
-      border: 1px solid #ffffff33;
+      background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+      color: white;
+      border: 1px solid rgba(127, 140, 141, 0.3);
+      box-shadow: 0 2px 8px rgba(127, 140, 141, 0.2);
 
       &:hover {
-        background: #ffffff33;
+        background: linear-gradient(135deg, #8b9dc3 0%, #6c7b7f 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(127, 140, 141, 0.3);
+        border-color: rgba(127, 140, 141, 0.5);
+      }
+
+      &:active {
+        transform: translateY(0);
       }
     }
+  }
+
+  // Responsive design
+  @media (max-width: $breakpoint-md) {
+    width: 260px;
+
+    &__poster-container {
+      height: 340px;
+    }
+
+    &__title {
+      font-size: 1rem;
+    }
+
+    &__btn {
+      font-size: 0.85rem;
+      padding: $spacing-sm 0;
+    }
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    width: 100%;
+    max-width: 320px;
+
+    &__poster-container {
+      height: 360px;
+    }
+  }
+}
+
+// Keyframe animations
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse-gradient {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
   }
 }
