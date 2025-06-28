@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import './Details.scss';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from '../../context/context';
 
 // This helper component is no longer needed for ratings, but let's keep it in case the API changes
 const Rating = ({ source, value }) => (
@@ -17,6 +18,8 @@ function Details() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { title } = useParams();
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -39,7 +42,49 @@ function Details() {
     setCurrentIndex(newIndex);
   };
 
+  // NEW: Cart functionality
+  const handleAddToCart = () => {
+    if (!movieData) return;
+    
+    const movie = {
+      id: movieData.imdbID || movieData.title,
+      title: movieData.title,
+      poster: movieData.Poster,
+      year: movieData.year,
+      genre: movieData.genre,
+      price: 9.99 // Default price, could be dynamic
+    };
+    
+    addToCart(movie);
+    
+    // Show feedback to user
+    const button = document.querySelector('.btn-info');
+    if (button) {
+      const originalText = button.textContent;
+      button.textContent = '✓ Added!';
+      button.style.background = '#28a745';
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.style.background = '';
+      }, 2000);
+    }
+  };
 
+  const handleBuyNow = () => {
+    if (!movieData) return;
+    
+    const movie = {
+      id: movieData.imdbID || movieData.title,
+      title: movieData.title,
+      poster: movieData.Poster,
+      year: movieData.year,
+      genre: movieData.genre,
+      price: 9.99 // Default price, could be dynamic
+    };
+    
+    addToCart(movie);
+    navigate('/checkout');
+  };
 
   const API_URL = `https://www.apirequest.in/movie/api/title/${title}`; // Using a mocky URL with your exact data
 
@@ -68,14 +113,26 @@ function Details() {
     };
 
     fetchMovie();
-  }, []);
+  }, [title]);
 
   if (isLoading) {
-    return <div className="loading-state"><h1>Loading...</h1></div>;
+    return (
+      <div className="loading-state">
+        <div className="loading-spinner"></div>
+        <h1>Loading...</h1>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="error-state"><h1>Error: {error}</h1></div>;
+    return (
+      <div className="error-state">
+        <h1>Error: {error}</h1>
+        <button onClick={() => navigate('/netflux')} className="btn-back">
+          ← Back to Home
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -86,7 +143,7 @@ function Details() {
           <div 
             className="details-hero" 
             // CHANGE: Property name is Poster (capital P)
-            style={{ backgroundImage: `url(${movieData.Images[0]})` }}
+            style={{ backgroundImage: `url(${movieData.Images && movieData.Images[0] ? movieData.Images[0] : movieData.Poster})` }}
           >
             <div className="hero-overlay"></div>
             <div className="hero-content">
@@ -96,11 +153,12 @@ function Details() {
                 <span>{movieData.year}</span>
                 <span className="rated">{movieData.rated}</span>
                 <span>{movieData.runtime}</span>
+                <span className="price">$9.99</span>
               </div>
               <p className="movie-plot">{movieData.plot}</p>
               <div className="hero-buttons">
-                <button className="btn-play">＄ Buy</button>
-                <button className="btn-info">🛒 Add to Cart</button>
+                <button onClick={handleBuyNow} className="btn-play">＄ Buy Now</button>
+                <button onClick={handleAddToCart} className="btn-info">🛒 Add to Cart</button>
               </div>
             </div>
           </div>
@@ -124,7 +182,7 @@ function Details() {
           </div>
           
           {/* NEW: Image Gallery Section */}
-              {movieData.Images && movieData.Images.length > 0 && (
+          {movieData.Images && movieData.Images.length > 0 && (
             <div className="carousel-section">
               <h2>Gallery</h2>
               <div className="carousel">
