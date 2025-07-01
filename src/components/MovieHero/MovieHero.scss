@@ -1,0 +1,182 @@
+@use '../../styles/variables' as *;
+
+.movie-hero {
+  position: relative;
+  height: 80vh;
+  min-height: 600px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  color: $text-primary;
+  overflow: hidden;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      77deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.6) 40%,
+      rgba(0, 0, 0, 0.4) 60%,
+      transparent 100%
+    );
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    padding: 0 5%;
+    max-width: 50%;
+    animation: slideInUp 0.8s ease-out;
+
+    @media (max-width: $breakpoint-lg) {
+      max-width: 70%;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      max-width: 90%;
+    }
+  }
+
+  &__badge {
+    margin-bottom: $spacing-lg;
+
+    .rating-badge {
+      display: inline-block;
+      padding: $spacing-xs $spacing-sm;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: $radius-sm;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      backdrop-filter: blur(10px);
+    }
+  }
+
+  &__title {
+    font-size: clamp($font-size-3xl, 5vw, $font-size-6xl);
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-xl;
+    line-height: $line-height-tight;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    
+    // Add a subtle glow effect
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+    font-size: $font-size-base;
+    color: $text-secondary;
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+
+      &.year {
+        font-weight: $font-weight-medium;
+        color: $text-primary;
+      }
+
+      &.runtime {
+        &::before {
+          content: '•';
+          color: $text-secondary;
+        }
+      }
+
+      &.genres {
+        display: flex;
+        gap: $spacing-sm;
+
+        &::before {
+          content: '•';
+          color: $text-secondary;
+          margin-right: $spacing-sm;
+        }
+
+        .genre-tag {
+          background: rgba(255, 255, 255, 0.1);
+          padding: $spacing-xs $spacing-sm;
+          border-radius: $radius-xl;
+          font-size: $font-size-xs;
+          font-weight: $font-weight-medium;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(5px);
+        }
+      }
+    }
+  }
+
+  &__plot {
+    font-size: $font-size-lg;
+    line-height: $line-height-relaxed;
+    margin-bottom: $spacing-2xl;
+    max-width: 600px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  }
+
+  &__cast {
+    margin-bottom: $spacing-2xl;
+
+    .cast-info {
+      display: flex;
+      margin-bottom: $spacing-sm;
+      font-size: $font-size-base;
+
+      .cast-label {
+        font-weight: $font-weight-medium;
+        color: $text-secondary;
+        min-width: 80px;
+        margin-right: $spacing-md;
+      }
+
+      .cast-value {
+        color: $text-primary;
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-lg) {
+  .movie-hero {
+    height: 70vh;
+    min-height: 500px;
+
+    &__content {
+      max-width: 80%;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .movie-hero {
+    height: 60vh;
+    min-height: 450px;
+
+    &__content {
+      max-width: 95%;
+    }
+
+    &__meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+
+      .meta-item.genres {
+        flex-wrap: wrap;
+      }
+    }
+  }
+} 

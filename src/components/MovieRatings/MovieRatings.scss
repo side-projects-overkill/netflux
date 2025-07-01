@@ -1,0 +1,149 @@
+@use '../../styles/variables' as *;
+
+.movie-ratings {
+  background: $surface-primary;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  border: 1px solid $border-primary;
+  backdrop-filter: blur(10px);
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-xl;
+    border-bottom: 2px solid $netflix-red;
+    padding-bottom: $spacing-sm;
+    display: inline-block;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  &__item {
+    .rating-header {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-sm;
+
+      .rating-icon {
+        font-size: $font-size-lg;
+      }
+
+      .rating-source {
+        font-weight: $font-weight-medium;
+        color: $text-secondary;
+        flex: 1;
+      }
+
+      .rating-value {
+        font-weight: $font-weight-bold;
+        font-size: $font-size-lg;
+        transition: $transition-all;
+      }
+    }
+
+    .rating-bar {
+      height: 8px;
+      background: $surface-secondary;
+      border-radius: $radius-xl;
+      overflow: hidden;
+      position: relative;
+
+      .rating-fill {
+        height: 100%;
+        border-radius: $radius-xl;
+        transition: width 1s ease-out;
+        position: relative;
+        
+        // Add a subtle glow effect
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+          );
+          animation: shimmer 2s infinite;
+        }
+      }
+    }
+
+    // Hover effect for rating items
+    &:hover {
+      .rating-header .rating-value {
+        transform: scale(1.1);
+      }
+
+      .rating-bar .rating-fill {
+        box-shadow: 0 0 10px currentColor;
+      }
+    }
+  }
+
+  &__awards {
+    margin-top: $spacing-2xl;
+    padding-top: $spacing-xl;
+    border-top: 1px solid $border-primary;
+
+    .awards-header {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-md;
+
+      .awards-icon {
+        font-size: $font-size-lg;
+      }
+
+      .awards-title {
+        font-weight: $font-weight-semibold;
+        color: $text-primary;
+      }
+    }
+
+    .awards-text {
+      color: $text-secondary;
+      line-height: $line-height-relaxed;
+      font-style: italic;
+    }
+  }
+}
+
+// Animation for the shimmer effect
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Responsive design
+@media (max-width: $breakpoint-md) {
+  .movie-ratings {
+    padding: $spacing-lg;
+
+    &__item {
+      .rating-header {
+        flex-wrap: wrap;
+        gap: $spacing-xs;
+
+        .rating-source {
+          min-width: 100px;
+        }
+      }
+    }
+  }
+} 
